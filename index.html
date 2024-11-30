@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Volcano Quiz</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        .quiz-container {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+            width: 600px;
+            position: relative;
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+        .question {
+            font-size: 18px;
+            margin-bottom: 10px;
+        }
+        .answers {
+            margin-bottom: 20px;
+        }
+        .answers input[type="radio"] {
+            margin-right: 10px;
+        }
+        .answers label {
+            font-size: 16px;
+        }
+        .submit-btn, .continue-btn, .start-btn {
+            display: block;
+            width: 100%;
+            padding: 10px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 18px;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+        .submit-btn:hover, .continue-btn:hover, .start-btn:hover {
+            background-color: #45a049;
+        }
+        .scoreboard {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background-color: #e0e0e0;
+            padding: 10px;
+            border-radius: 5px;
+            font-size: 16px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="quiz-container">
+        <div class="scoreboard" id="scoreboard">Score: 0/0</div>
+        <h1>Volcano Quiz</h1>
+        <div id="quiz-content">
+            <button class="start-btn" onclick="startQuiz()">Start Quiz</button>
+        </div>
+    </div>
+
+    <script>
+        const questions = [
+            {
+                question: "You are 5 miles away from a volcano, and the eruption warning is issued. You are given 60 minutes to evacuate. If it takes you 40 minutes to reach the nearest evacuation point, how much time do you have left once you arrive?",
+                options: [
+                    "0 minutes, you’re already late.",
+                    "20 minutes, but it's still safe to wait.",
+                    "10 minutes, but you can still make it if you hurry.",
+                    "60 minutes, you can relax now."
+                ],
+                correct: 0,
+                reason: "The eruption could happen anytime, so you’re already late!"
+            },
+            {
+                question: "A volcano has erupted, and the ash cloud is moving toward your area. You have an umbrella, a thick coat, and a flashlight. What is the most useful thing to bring when evacuating?",
+                options: [
+                    "Umbrella, because it will shield you from the ash.",
+                    "Thick coat, as it will protect you from heat and falling debris.",
+                    "Flashlight, as it will help you see in the dark ash cloud.",
+                    "None of the above; the best option is to evacuate as quickly as possible."
+                ],
+                correct: 3,
+                reason: "Evacuating quickly is the best way to ensure your safety."
+            },
+            {
+                question: "A volcano is erupting, and you're on a road that leads to safety. You notice the road splits into two paths: one leads directly toward the eruption, and the other goes through a dark tunnel. Which path should you take?",
+                options: [
+                    "The direct path to the eruption, since you can get out faster.",
+                    "The tunnel, because it’s out of view of the eruption, so it feels safer.",
+                    "The road that takes you around the eruption zone, avoiding the eruption and the tunnel.",
+                    "Neither path; you should stay put and wait for help."
+                ],
+                correct: 2,
+                reason: "The road that takes you around the eruption zone, avoiding the eruption and the tunnel."
+            },
+            {
+                question: "You’re in the middle of an eruption, and you’re told to evacuate. You have two bags: one is heavy with food and supplies, and the other is light with just essentials like your ID, phone, and a flashlight. Which bag should you take?",
+                options: [
+                    "Take the heavy bag because you might need the supplies later.",
+                    "Take the light bag because it’s easier to carry quickly.",
+                    "Leave both bags behind and run without anything.",
+                    "Take both bags and carry them as best as you can."
+                ],
+                correct: 1,
+                reason: "Take the light bag because it’s easier to carry quickly."
+            },
+            {
+                question: "You are trapped inside a house due to falling ash and can’t see the way out. A neighbor calls and says, “To leave, you need to find a door with no handle, a window that’s not made of glass, and a way out that’s safe but far.” Which of these should you do?",
+                options: [
+                    "Break the glass to make your way out.",
+                    "Wait for help; you can’t find an escape route by yourself.",
+                    "Find a way to open the door without touching the handle, such as a push bar.",
+                    "Crawl through the smallest window, even if it’s too small."
+                ],
+                correct: 2,
+                reason: "Find a way to open the door without touching the handle, such as a push bar."
+            },
+            {
+                question: "An eruption is happening, and lava is flowing toward your neighborhood. You’re told to leave immediately, but you’re unsure of the safest route. One road is blocked by debris, and another has a large, fast-moving river. Which route should you take?",
+                options: [
+                    "The road with the river, since it’s faster.",
+                    "The road with debris, as lava can’t cross it.",
+                    "You should wait at home and hope the situation improves.",
+                    "Take the safest route to higher ground, even if it’s less direct."
+                ],
+                correct: 3,
+                reason: "Take the safest route to higher ground, even if it’s less direct."
+            },
+            {
+                question: "A riddle to determine how prepared you are for evacuation: I can’t be seen but can be felt, I fall from the sky and cover the ground, and if I’m not dealt with quickly, I can block your way. What am I?",
+                options: [
+                    "Rain.",
+                    "Ash.",
+                    "Wind.",
+                    "Snow."
+                ],
+                correct: 1,
+                reason: "Ash, which can severely obstruct your path and vision during a volcanic eruption."
+            }
+            // Add more questions as needed.
+        ];
+
+        let currentQuestionIndex = 0;
+        let score = 0;
+        let totalQuestions = 0;
+
+        function startQuiz() {
+            document.getElementById('quiz-content').innerHTML = `
+                <div class="question">${questions[currentQuestionIndex].question}</div>
+                <div class="answers" id="answers">
+                    ${questions[currentQuestionIndex].options.map((option, index) => `
+                        <div>
+                            <input type="radio" id="option${index}" name="answer" value="${index}">
+                            <label for="option${index}">${option}</label>
+                        </div>
+                    `).join('')}
+                </div>
+                <button class="submit-btn" onclick="submitAnswer()">Submit Answer</button>
+            `;
+        }
+
+        function submitAnswer() {
+            const selected = document.querySelector('input[name="answer"]:checked');
+            if (!selected) {
+                alert("Please select an answer!");
+                return;
+            }
+
+            const userAnswer = parseInt(selected.value, 10);
+            const isCorrect = userAnswer === questions[currentQuestionIndex].correct;
+            if (isCorrect) {
+                score++;
+            }
+            totalQuestions++;
+
+            document.getElementById('scoreboard').textContent = `Score: ${score}/${totalQuestions}`;
+
+            document.getElementById('quiz-content').innerHTML = `
+                <div class="question">${questions[currentQuestionIndex].question}</div>
+                <div class="answers">
+                    <p><strong>Correct Answer:</strong> ${questions[currentQuestionIndex].options[questions[currentQuestionIndex].correct]}</p>
+                    <p>${questions[currentQuestionIndex].reason}</p>
+                </div>
+                <button class="continue-btn" onclick="nextQuestion()">Continue</button>
+            `;
+        }
+
+        function nextQuestion() {
+            currentQuestionIndex++;
+            if (currentQuestionIndex < questions.length) {
+                startQuiz();
+            } else {
+                document.getElementById('quiz-content').innerHTML = `
+                    <h2>Quiz Complete!</h2>
+                    <p>Your final score is ${score}/${totalQuestions}.</p>
+                `;
+            }
+        }
+    </script>
+</body>
+</html>
