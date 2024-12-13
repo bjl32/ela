@@ -88,7 +88,86 @@
     </div>
 
     <script>
-        const questions = [/* Your questions array remains unchanged */];
+        const questions = [
+            {
+                question: "You are 5 miles away from a volcano, and the eruption warning is issued. You are given 60 minutes to evacuate. If it takes you 40 minutes to reach the nearest evacuation point, how much time do you have left once you arrive?",
+                options: [
+                    "0 minutes, you’re already late.",
+                    "20 minutes, but it's still safe to wait.",
+                    "10 minutes, but you can still make it if you hurry.",
+                    "60 minutes, you can relax now."
+                ],
+                correct: 0,
+                reason: "The question emphasizes that waiting until the last minute to evacuate is unsafe. If the evacuation takes up the entire warning period, you risk getting caught in the eruption. Early evacuation is crucial to avoid dangerous delays caused by blocked roads or worsening conditions."
+            },
+            {
+                question: "A volcano has erupted, and the ash cloud is moving toward your area. You have an umbrella, a thick coat, and a flashlight. What is the most useful thing to bring when evacuating?",
+                options: [
+                    "Umbrella, because it will shield you from the ash.",
+                    "Thick coat, as it will protect you from heat and falling debris.",
+                    "Flashlight, as it will help you see in the dark ash cloud.",
+                    "None of the above; the best option is to evacuate as quickly as possible."
+                ],
+                correct: 3,
+                reason: "While the listed items may provide minor protection, none of them substitute for timely evacuation. Ashfall can quickly worsen conditions, affecting air quality and visibility, making evacuation the safest action."
+            },
+            {
+                question: "A volcano is erupting, and you're on a road that leads to safety. You notice the road splits into two paths: one leads directly toward the eruption, and the other goes through a dark tunnel. Which path should you take?",
+                options: [
+                    "The direct path to the eruption, since you can get out faster.",
+                    "The tunnel, because it’s out of view of the eruption, so it feels safer.",
+                    "The road that takes you around the eruption zone, avoiding the eruption and the tunnel.",
+                    "Neither path; you should stay put and wait for help."
+                ],
+                correct: 2,
+                reason: "Both the direct path toward the eruption and the dark tunnel carry significant risks. The direct path exposes you to the eruption, and the tunnel may trap you if debris or lava blocks the exit. Choosing a route that avoids immediate hazards is the safest option."
+            },
+            {
+                question: "You’re in the middle of an eruption, and you’re told to evacuate. You have two bags: one is heavy with food and supplies, and the other is light with just essentials like your ID, phone, and a flashlight. Which bag should you take?",
+                options: [
+                    "Take the heavy bag because you might need the supplies later.",
+                    "Take the light bag because it’s easier to carry quickly.",
+                    "Leave both bags behind and run without anything.",
+                    "Take both bags and carry them as best as you can."
+                ],
+                correct: 1,
+                reason: "During an evacuation, speed is critical. A heavy bag slows you down and could exhaust you before reaching safety. Essentials like ID, phone, and a flashlight are enough for immediate survival, and rescue teams can provide additional support later."
+            },
+            {
+                question: "You are trapped inside a house due to falling ash and can’t see the way out. A neighbor calls and says, “To leave, you need to find a door with no handle, a window that’s not made of glass, and a way out that’s safe but far.” Which of these should you do?",
+                options: [
+                    "Break the glass to make your way out.",
+                    "Wait for help; you can’t find an escape route by yourself.",
+                    "Find a way to open the door without touching the handle, such as a push bar.",
+                    "Crawl through the smallest window, even if it’s too small."
+                ],
+                correct: 2,
+                reason: "This scenario uses a riddle to emphasize finding practical, safe solutions. Breaking windows is dangerous and can expose you to ash. Waiting for help delays your escape. A push-bar door represents an escape route designed for emergencies, prioritizing safety."
+            },
+            {
+                question: "An eruption is happening, and lava is flowing toward your neighborhood. You’re told to leave immediately, but you’re unsure of the safest route. One road is blocked by debris, and another has a large, fast-moving river. Which route should you take?",
+                options: [
+                    "The road with the river, since it’s faster.",
+                    "The road with debris, as lava can’t cross it.",
+                    "You should wait at home and hope the situation improves.",
+                    "Take the safest route to higher ground, even if it’s less direct."
+                ],
+                correct: 3,
+                reason: "Direct paths that are blocked or risky should be avoided. Lava can flow downhill and cross obstacles, making low-lying routes unsafe. Heading to higher ground reduces the risk of encountering lava or flooding, even if it takes longer."
+            },
+            {
+                question: "A riddle to determine how prepared you are for evacuation: I can’t be seen but can be felt, I fall from the sky and cover the ground, and if I’m not dealt with quickly, I can block your way. What am I?",
+                options: [
+                    "Rain.",
+                    "Ash.",
+                    "Wind.",
+                    "Snow."
+                ],
+                correct: 1,
+                reason: "Ash, which can severely obstruct your path and vision during a volcanic eruption."
+            }
+            // Add more questions as needed.
+        ];
 
         let currentQuestionIndex = 0;
         let score = 0;
