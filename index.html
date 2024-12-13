@@ -258,10 +258,15 @@
                 endGame("Congratulations! You survived!");
             }
         }
+        
 
         function endGame(message) {
             clearInterval(timerInterval);
-            document.getElementById('quiz-content').innerHTML = `<h2>${message}</h2>`;
+            document.getElementById('quiz-content').innerHTML = `
+                <h2>${message}</h2>
+                ${reason ? `<p><strong>Reason:</strong> ${reason}</p>` : ""}
+            `;
+            
         }
     </script>
 </body>
