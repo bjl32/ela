@@ -1,1 +1,304 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Volcano Quiz</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        .quiz-container {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+            width: 600px;
+            position: relative;
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+        .question {
+            font-size: 18px;
+            margin-bottom: 10px;
+        }
+        .answers {
+            margin-bottom: 20px;
+        }
+        .answers input[type="radio"] {
+            margin-right: 10px;
+        }
+        .answers label {
+            font-size: 16px;
+        }
+        .submit-btn, .continue-btn, .start-btn {
+            display: block;
+            width: 100%;
+            padding: 10px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 18px;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+        .submit-btn:hover, .continue-btn:hover, .start-btn:hover {
+            background-color: #45a049;
+        }
+        .scoreboard {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background-color: #e0e0e0;
+            padding: 10px;
+            border-radius: 5px;
+            font-size: 16px;
+            font-weight: bold;
+        }
+        .timer {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            background-color: #fdd835;
+            padding: 10px;
+            border-radius: 5px;
+            font-size: 16px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="quiz-container">
+        <div class="scoreboard" id="scoreboard">Score: 0/0</div>
+        <div class="timer" id="timer">Time Left: 60s</div>
+        <h1>Volcano Quiz</h1>
+        <div id="quiz-content">
+            <button class="start-btn" onclick="startQuiz()">Start Quiz</button>
+        </div>
+    </div>
 
+    <script>
+        const questions = [
+            {
+                question: "You are 5 miles away from a volcano, and the eruption warning is issued. You are given 60 minutes to evacuate. If it takes you 40 minutes to reach the nearest evacuation point, how much time do you have left once you arrive?",
+                options: [
+                    "0 minutes, you’re already late.",
+                    "20 minutes, but it's still safe to wait.",
+                    "10 minutes, but you can still make it if you hurry.",
+                    "60 minutes, you can relax now."
+                ],
+                correct: 0,
+                reason: "The question emphasizes that waiting until the last minute to evacuate is unsafe. If the evacuation takes up the entire warning period, you risk getting caught in the eruption. Early evacuation is crucial to avoid dangerous delays caused by blocked roads or worsening conditions."
+            },
+            {
+                question: "A volcano has erupted, and the ash cloud is moving toward your area. You have an umbrella, a thick coat, and a flashlight. What is the most useful thing to bring when evacuating?",
+                options: [
+                    "Umbrella, because it will shield you from the ash.",
+                    "Thick coat, as it will protect you from heat and falling debris.",
+                    "Flashlight, as it will help you see in the dark ash cloud.",
+                    "None of the above; the best option is to evacuate as quickly as possible."
+                ],
+                correct: 3,
+                reason: "While the listed items may provide minor protection, none of them substitute for timely evacuation. Ashfall can quickly worsen conditions, affecting air quality and visibility, making evacuation the safest action."
+            },
+            {
+                question: "A volcano is erupting, and you're on a road that leads to safety. You notice the road splits into two paths: one leads directly toward the eruption, and the other goes through a dark tunnel. Which path should you take?",
+                options: [
+                    "The direct path to the eruption, since you can get out faster.",
+                    "The tunnel, because it’s out of view of the eruption, so it feels safer.",
+                    "The road that takes you around the eruption zone, avoiding the eruption and the tunnel.",
+                    "Neither path; you should stay put and wait for help."
+                ],
+                correct: 2,
+                reason: "Both the direct path toward the eruption and the dark tunnel carry significant risks. The direct path exposes you to the eruption, and the tunnel may trap you if debris or lava blocks the exit. Choosing a route that avoids immediate hazards is the safest option."
+            },
+            {
+                question: "You’re in the middle of an eruption, and you’re told to evacuate. You have two bags: one is heavy with food and supplies, and the other is light with just essentials like your ID, phone, and a flashlight. Which bag should you take?",
+                options: [
+                    "Take the heavy bag because you might need the supplies later.",
+                    "Take the light bag because it’s easier to carry quickly.",
+                    "Leave both bags behind and run without anything.",
+                    "Take both bags and carry them as best as you can."
+                ],
+                correct: 1,
+                reason: "During an evacuation, speed is critical. A heavy bag slows you down and could exhaust you before reaching safety. Essentials like ID, phone, and a flashlight are enough for immediate survival, and rescue teams can provide additional support later."
+            },
+            {
+                question: "You are trapped inside a house due to falling ash and can’t see the way out. A neighbor calls and says, “To leave, you need to find a door with no handle, a window that’s not made of glass, and a way out that’s safe but far.” Which of these should you do?",
+                options: [
+                    "Break the glass to make your way out.",
+                    "Wait for help; you can’t find an escape route by yourself.",
+                    "Find a way to open the door without touching the handle, such as a push bar.",
+                    "Crawl through the smallest window, even if it’s too small."
+                ],
+                correct: 2,
+                reason: "This scenario uses a riddle to emphasize finding practical, safe solutions. Breaking windows is dangerous and can expose you to ash. Waiting for help delays your escape. A push-bar door represents an escape route designed for emergencies, prioritizing safety."
+            },
+            {
+                question: "An eruption is happening, and lava is flowing toward your neighborhood. You’re told to leave immediately, but you’re unsure of the safest route. One road is blocked by debris, and another has a large, fast-moving river. Which route should you take?",
+                options: [
+                    "The road with the river, since it’s faster.",
+                    "The road with debris, as lava can’t cross it.",
+                    "You should wait at home and hope the situation improves.",
+                    "Take the safest route to higher ground, even if it’s less direct."
+                ],
+                correct: 3,
+                reason: "Direct paths that are blocked or risky should be avoided. Lava can flow downhill and cross obstacles, making low-lying routes unsafe. Heading to higher ground reduces the risk of encountering lava or flooding, even if it takes longer."
+            },
+            {
+                question: "A riddle to determine how prepared you are for evacuation: I can’t be seen but can be felt, I fall from the sky and cover the ground, and if I’m not dealt with quickly, I can block your way. What am I?",
+                options: [
+                    "Rain.",
+                    "Ash.",
+                    "Wind.",
+                    "Snow."
+                ],
+                correct: 1,
+                reason: "Ash, which can severely obstruct your path and vision during a volcanic eruption."
+            },
+            {
+                question: "If you are staying indoors during an eruption and notice ash building up on your roof, what should you do?",
+                options: [
+                    "Let the ash settle and clear it later.",
+                    "Attempt to remove the ash immediately, even if it’s heavy.",
+                    "Stay inside and avoid disturbing the ash; it may cause your roof to collapse.",
+                    "Ignore the ash; it will blow away on its own in a few hours."
+                ],
+                correct: 2,
+                reason: "Ash can accumulate and cause structural damage, especially if it’s wet or heavy. It's safer to stay inside and wait for professionals to handle the situation."
+            },
+            {
+                question: "A volcano is erupting, and you are unsure of which evacuation route to take. One route is open, but there’s a chance of falling debris. The other is blocked but has been cleared recently. What should you do?",
+                options: [
+                    "Take the open route, as it seems safer.",
+                    "Wait until the eruption stops before deciding which route to take.",
+                    "Choose the recently cleared route to avoid the risk of falling debris.",
+                    "Choose neither route and stay at your location."
+                ],
+                correct: 2,
+                reason: "The open route might have debris from the eruption, making it dangerous. The recently cleared route, even if blocked earlier, is now the safer option. Never delay evacuation, as conditions can worsen quickly."
+            },
+            {
+                question: "Youre in a volcanic eruption zone and hear an alert for a possible pyroclastic flow heading in your direction. What should you do?",
+                
+                options: [
+                    "Wait and see if the pyroclastic flow reaches you before evacuating.",
+                    "Leave immediately, as pyroclastic flows are extremely fast and dangerous.",
+                    "Continue with your normal routine since pyroclastic flows are not as dangerous as lava.",
+                    "Stay inside, as being indoors will protect you from a pyroclastic flow."
+                ],
+                correct: 1,
+                reason: "Pyroclastic flows can move at terrifying speeds, and they are extremely dangerous due to heat and speed. Delaying evacuation puts you at great risk. Always act fast when such warnings are issued."
+            }
+            // Add more questions as needed.
+        ];
+
+        let currentQuestionIndex = 0;
+        let score = 0;
+        let totalQuestions = 0;
+        let timerInterval;
+
+        function startQuiz() {
+            startTimer();
+            showQuestion();
+        }
+
+        function startTimer() {
+            let timeLeft = 60;
+            document.getElementById("timer").textContent = `Time Left: ${timeLeft}s`;
+
+            clearInterval(timerInterval);
+            timerInterval = setInterval(() => {
+                timeLeft--;
+                document.getElementById("timer").textContent = `Time Left: ${timeLeft}s`;
+                if (timeLeft <= 0) {
+                    clearInterval(timerInterval);
+                    endGame("Time's up! irl, u wont even have this 20 seconds...");
+                }
+            }, 1000);
+        }
+
+        function showQuestion() {
+            const question = questions[currentQuestionIndex];
+            document.getElementById('quiz-content').innerHTML = `
+                <div class="question">${question.question}</div>
+                <div class="answers" id="answers">
+                    ${question.options.map((option, index) => `
+                        <div>
+                            <input type="radio" id="option${index}" name="answer" value="${index}">
+                            <label for="option${index}">${option}</label>
+                        </div>
+                    `).join('')}
+                </div>
+                <button class="submit-btn" onclick="submitAnswer()">Submit Answer</button>
+            `;
+        }
+
+        function submitAnswer() {
+            const selected = document.querySelector('input[name="answer"]:checked');
+            if (!selected) {
+                alert("Please select an answer!");
+                return;
+            }
+
+            const userAnswer = parseInt(selected.value, 10);
+            const isCorrect = userAnswer === questions[currentQuestionIndex].correct;
+
+            clearInterval(timerInterval);
+
+            if (!isCorrect) {
+                endGame("Wrong answer! ur dead lol");
+                return;
+            }
+
+            score++;
+            totalQuestions++;
+            updateScore();
+            showCorrectAnswer();
+        }
+
+        function updateScore() {
+            document.getElementById('scoreboard').textContent = `Score: ${score}/${totalQuestions}`;
+        }
+
+        function showCorrectAnswer() {
+            const question = questions[currentQuestionIndex];
+            document.getElementById('quiz-content').innerHTML = `
+                <div class="question">${question.question}</div>
+                <div class="answers">
+                    <p><strong>Correct Answer:</strong> ${question.options[question.correct]}</p>
+                    <p>${question.reason}</p>
+                </div>
+                <button class="continue-btn" onclick="nextQuestion()">Continue</button>
+            `;
+        }
+
+        function nextQuestion() {
+            currentQuestionIndex++;
+            if (currentQuestionIndex < questions.length) {
+                startTimer();
+                showQuestion();
+            } else {
+                endGame("Congratulations! You survived!");
+            }
+        }
+        
+
+        function endGame(message) {
+            clearInterval(timerInterval);
+            document.getElementById('quiz-content').innerHTML = `<h2>${message}</h2>`;
+            
+        }
+    </script>
+</body>
+</html>
