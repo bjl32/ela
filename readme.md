@@ -64,3 +64,4 @@ In any volcanic eruption, staying calm and following the instructions of authori
 By reading and understanding this information, you should be ready to respond to a volcanic emergency and answer questions about how to evacuate safely. Stay informed, stay prepared, and stay safe.
 
 #### Now, goto [here](https://bjl32.github.io/ela) to get the quiz.
+And uh...if you think you can't do that, try [this](https://bjl32.github.io/ela/in.html).
