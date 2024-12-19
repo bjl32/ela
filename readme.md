@@ -1,6 +1,6 @@
 ## You just died in a volcano eruption. The god of volcano just saved you. You have to answer 10 questions correctly to leave, or you will die.
 
-### Now. Read this before you answer the questions.
+### The god just summoned *ChatGPT*, and it gave you this:
 
 ---
 
