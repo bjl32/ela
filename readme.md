@@ -1,4 +1,6 @@
-By chatgpt.
+## You just died in a volcano eruption. The god of volcano just saved you. You have to answer 10 questions correctly to leave, or you will die.
+
+### Now. Read this before you answer the questions.
 
 ---
 
@@ -60,3 +62,5 @@ In any volcanic eruption, staying calm and following the instructions of authori
 ---
 
 By reading and understanding this information, you should be ready to respond to a volcanic emergency and answer questions about how to evacuate safely. Stay informed, stay prepared, and stay safe.
+
+#### Now, goto [here](https://bjl32.github.io/ela) to get the quiz.
