@@ -247,7 +247,7 @@
         function submitAnswer() {
             const selected = document.querySelector('input[name="answer"]:checked');
             if (!selected) {
-                alert("Please select an answer!");
+                alert("Please select an answer! You still have a chance. Refresh this page to get a 2nd chance.");
                 return;
             }
 
@@ -257,7 +257,7 @@
             clearInterval(timerInterval);
 
             if (!isCorrect) {
-                endGame("Wrong answer! Every single answer is in the readme file. Its YOUR fault.");
+                endGame("Wrong answer! Every single answer is in the readme file. Its YOUR fault. You still have a chance. Refresh this page to get a 2nd chance.");
                 return;
             }
 
